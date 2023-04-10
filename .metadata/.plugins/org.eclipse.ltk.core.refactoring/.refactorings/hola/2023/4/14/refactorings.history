@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;datosReibidos&apos; in &apos;musica.SpotyPrincipal.Thread1.run()&apos; to &apos;datosRecibidos&apos;&#x0A;- Original project: &apos;hola&apos;&#x0A;- Original element: &apos;musica.SpotyPrincipal.Thread1.run().datosReibidos&apos;&#x0A;- Renamed element: &apos;datosReibidos&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;datosReibidos&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src=/optional=/true=/=/maven.pomderived=/true=/&lt;musica{SpotyPrincipal.java[SpotyPrincipal[Thread1~run@datosReibidos!1018!1092!1025!1037!QString;!0!false" name="datosRecibidos" references="true" stamp="1680640395331" version="1.0"/>
+</session>
