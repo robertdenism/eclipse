@@ -1,0 +1,151 @@
+package preguntasYrespuestas;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+
+public class ServidorPreguntas {
+
+	private static final String MENSAJE_BIENVENIDA = "¡BIENVENIDO AL JUEGO!\n" + "A continuación te esperan 15 preguntas. Te atreves?\n" + "S/N\n";
+	private static final String FORMATO = "UTF-8";
+	private static final String DEBE_RESPONDER_CON_S_O_N = "Debe responder con S o N\n";
+	private static final String ACCEPTA_JUGAR = "s";
+	private static final String NO_JUGAR = "n";
+	private static final String MENSAJE_DESPEDIDA = "Hasta la proxima\n"+"^C"+"\nPulsa Enter para salir";
+	private static final String REGLAS_BASICAS = "Las reglas son simples...\n Vas a recibir una pregunta\n y con el teclado numérico escribes la respuesta que consideres\n Al final del juego recibiras tu puntuación\nPulsa cualquier tecla para continuar";
+
+	public static void main(String[] args) {
+		String rutaPreguntas = args[0];
+		int puerto = Integer.parseInt(args[1]);
+
+		// Creamos el hilo de lectura del archivo
+		LectorArchivoThread lectorArchivoThread = new LectorArchivoThread(rutaPreguntas);
+		Thread thread = new Thread(lectorArchivoThread);
+		thread.start();
+		ArrayList<String> preguntas = lectorArchivoThread.getPreguntas();
+
+		try {
+			ServerSocket serverSocket = new ServerSocket(puerto);
+			while (true) {
+				Socket socket = serverSocket.accept();
+				InetAddress clientAddress = socket.getInetAddress();
+				System.out.println("Client connected: " + clientAddress.getHostAddress());
+
+				envioSaludo(socket);
+
+				String respuestaRecibida = recibirRespuesta(socket);
+				System.out.println(respuestaRecibida);
+				
+				while (true) {
+					if(respuestaRecibida.equalsIgnoreCase(ACCEPTA_JUGAR)){
+						acceptaPartida(socket);
+						break;
+					}else if(respuestaRecibida.equalsIgnoreCase(NO_JUGAR)) {
+						salirDelJuego(socket);
+						break;
+					}else {
+						respuestaErroneaAlComenzar(socket);
+						respuestaRecibida=recibirRespuesta(socket);
+					}
+				}
+
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void salirDelJuego(Socket socket) {
+		
+		String mensaje = MENSAJE_DESPEDIDA;
+		construccionEnvioMensjes(mensaje, socket);
+	}
+
+	private static void acceptaPartida(Socket socket) {
+		String mensaje = REGLAS_BASICAS;
+		// aqui construimos el mensaje y lo enviamos
+		construccionEnvioMensjes(mensaje, socket);
+		
+	}
+
+	public static void respuestaErroneaAlComenzar(Socket socket) {
+		String mensaje = DEBE_RESPONDER_CON_S_O_N;
+		
+		construccionEnvioMensjes(mensaje, socket);
+	}
+
+	public static void envioSaludo(Socket socket) {
+		String mensaje = MENSAJE_BIENVENIDA;
+		
+		construccionEnvioMensjes(mensaje, socket);
+		
+	}
+	
+	private static void construccionEnvioMensjes(String mensaje, Socket socket) {
+		try {
+			byte[] mensajeByte = mensaje.getBytes(FORMATO);
+			OutputStream out = socket.getOutputStream();
+			out.write(mensajeByte);
+			out.flush();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static String recibirRespuesta(Socket socket) {
+		String respuesta = "";
+		try {
+			InputStream input = socket.getInputStream();
+			// esta parte es para recibier un mensaje TCP
+			BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+			respuesta = reader.readLine();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return respuesta;
+	}
+
+	// Esta clase se encarga de leer el archivo en un hilo separado
+	private static class LectorArchivoThread implements Runnable {
+		private String rutaArchivo;
+		private ArrayList<String> preguntas;
+
+		public LectorArchivoThread(String rutaArchivo) {
+			this.rutaArchivo = rutaArchivo;
+			this.preguntas = new ArrayList<>();
+		}
+
+		public void run() {
+			try {
+				FileReader fr = new FileReader(rutaArchivo);
+				BufferedReader reader = new BufferedReader(fr);
+				String linea = reader.readLine();
+
+				while (linea != null) {
+					preguntas.add(linea);
+					linea = reader.readLine();
+				}
+
+				reader.close();
+				fr.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		public ArrayList<String> getPreguntas() {
+			return preguntas;
+		}
+	}
+}

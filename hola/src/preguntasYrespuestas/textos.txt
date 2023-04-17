@@ -1,0 +1,15 @@
+2:¿Cuál es la capital de España?:Valencia:Madrid:Barcelona:Sevilla
+3:¿Quién escribió el libro "Cien años de soledad"?:Mario Vargas Llosa:Pablo Neruda:Gabriel García Márquez:Jorge Luis Borges:Octavio Paz
+3:¿En qué año se fundó la compañía Microsoft?:1985:1990:1975:1980
+5:¿Cuál es el país más grande del mundo en términos de área?:China:Brasil:Canadá:Estados Unidos:Rusia
+1:¿Quién inventó el teléfono?:Alexander Graham Bell:Nikola Tesla:Albert Einstein:Thomas Edison
+5:¿Cuál es el río más largo del mundo?:Nilo:Volga:Yangtsé:Mississippi:Amazonas
+4:¿Quién pintó la famosa obra "La Mona Lisa"?:Rembrandt:Pablo Picasso:Salvador Dalí:Leonardo da Vinci:Vincent van Gogh
+1:¿En qué año llegó el hombre a la luna por primera vez?:1969:1975:1972:1981:1992
+1:¿Qué escritor español recibió el Premio Nobel de Literatura en 2010?:Mario Vargas Llosa:Jorge Luis Borges:Gabriel García Márquez:José Saramago:Octavio Paz
+1:¿Quién es considerado el padre de la computación?:Alan Turing:Tim Berners-Lee:Mark Zuckerberg:Bill Gates:Steve Jobs
+2:¿Qué ciudad es conocida como "La Ciudad del Amor"?:Venecia:París:Florencia:Roma:Barcelona
+3:¿En qué país se encuentra la Torre Eiffel?:Alemania:Italia:Francia:Inglaterra:España
+1:¿Quién fue el primer presidente de Estados Unidos?:George Washington:Thomas Jefferson:Abraham Lincoln:John F. Kennedy:Barack Obama
+5:¿Cuál es la montaña más alta del mundo?:Aconcagua:K2:Kilimanjaro:Matterhorn:Monte Everest
+4:¿Quién escribió la famosa obra "El Quijote"?:Garcilaso de la Vega:Federico García Lorca:Lope de Vega:Miguel de Cervantes:Rubén Darío
