@@ -40,11 +40,11 @@ public class SpotyPrincipal {
 		@Override
 		public void run() {
 			try {
-				DatagramSocket socket = new DatagramSocket(this.puerto);
+				DatagramSocket socket = new DatagramSocket(puerto);
 				byte[] buffer = new byte[1024];
 
 				while (true) {
-					int c = 0;
+			
 					DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 					socket.receive(packet);
 					String datosRecibidos = new String(packet.getData(), 0, packet.getLength());

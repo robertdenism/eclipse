@@ -1,0 +1,67 @@
+package proyectoAPIsTODO;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class SubclaseThreadChiste extends RecibePeticiones implements Runnable {
+
+	public SubclaseThreadChiste(String numeroDePericiones2) {
+		super(numeroDePericiones2);
+	}
+
+	@Override
+	public void run() {
+
+	}
+
+	// tratar de buscar ptra manera a traves de http
+
+		String recibido = recibeYdevielveJSONsinTratar();
+		String single = "single";
+		String twopat = "twopart";
+
+		// volver a mirar el separador
+		String[] separadorPuntos = recibido.split("\"");
+
+		if (single.equals(separadorPuntos[9])) {
+			System.out.println(separadorPuntos[13]);
+		} else {
+			System.out.println(separadorPuntos[13] + "\n" + separadorPuntos[17]);
+		}
+
+	
+
+	public static String recibeYdevielveJSONsinTratar() {
+		String chisteSinTratar = "";
+		try {
+			URL url = new URL("https://v2.jokeapi.dev/joke/Any");
+
+			// Abrir la conexión HTTP
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+			// Establecer el método HTTP y otros encabezados necesarios
+			con.setRequestMethod("GET");
+
+			// Obtener la respuesta HTTP
+			int responseCode = con.getResponseCode();
+
+			// Leer la respuesta del servidor
+			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+
+			chisteSinTratar = response.toString();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return chisteSinTratar;
+	}
+}
+}

@@ -26,13 +26,9 @@ public class Mail1 {
 		
 		String mensaje = "hola, esto es el cuerpo del mensaje enviado con java";
 		
-		
-		//String entradaOriginalUsu = "robert.munteanu";
-        //String cadenaCodificadaUsu = Base64.getEncoder().encodeToString(entradaOriginalUsu.getBytes());
-		
 		Email email = EmailBuilder.startingBlank()
 				
-		          .to("Conseguidooo", "@educa.madrid.org")
+		          .to("Conseguidooo", "robert.munteanu@educa.madrid.org")
 		          //la terminacion tiene que ser s o si con educa.madrid en eclipse
 		          .from("robert", "robertConNuevoMail@educa.madrid.org")
 		          //.withReplyTo("lollypop", "lolly.pop@othermail.com")
@@ -43,7 +39,7 @@ public class Mail1 {
 		         
 
 		Mailer mailer = MailerBuilder
-		          .withSMTPServer("smtp.educa.madrid.org", 587, "robert.munteanu", "pass")
+		          .withSMTPServer("smtp.educa.madrid.org", 587, "robert.munteanu", "Munteanu1")
 		          .withTransportStrategy(TransportStrategy.SMTP_TLS)
 		          .clearEmailValidator() // turns off email validatio
 		          .buildMailer();

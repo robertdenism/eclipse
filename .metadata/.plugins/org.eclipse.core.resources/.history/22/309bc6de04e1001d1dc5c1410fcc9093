@@ -1,0 +1,26 @@
+package proyectoAPIsTODO;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+
+public class MainRecibeEnvia {
+
+	public static void main(String[] args) {
+		
+		
+		RecibePeticiones  recibidor = new RecibePeticiones("c","10");
+		Thread threadP = new Thread(recibidor);
+		threadP.start();
+		
+		ArrayList<String> listaAEnviar = new ArrayList<>();
+		
+		
+		listaAEnviar.addAll(recibidor.listaPrincipal());
+		System.out.println(listaAEnviar);
+
+	}
+}

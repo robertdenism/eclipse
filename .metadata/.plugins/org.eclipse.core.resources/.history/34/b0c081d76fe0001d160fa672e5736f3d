@@ -1,0 +1,76 @@
+package proyectoAPIsTODO;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class RecibePeticiones implements Runnable {
+
+	private String tipoDePeticion;
+	private String numeroDePericiones;
+
+	public RecibePeticiones(String tipoDePeticion, String numeroDePeticiones) {
+		this.tipoDePeticion = tipoDePeticion;
+		this.numeroDePericiones = numeroDePeticiones;
+		
+	};
+
+	@Override
+	public void run() {
+		//aqui nos encargamos de ver que tipo de respuesta desea el servidor
+		//hacemos dos metodos principales los cuales instancian dos clases
+		if("C".equalsIgnoreCase(numeroDePericiones)) {
+			//declarar arraylist que devolveremos por un metodo
+			buscarChiste();
+		}else if("d".equalsIgnoreCase(numeroDePericiones)) {
+			buscarDato();
+		}else {
+			System.out.println(tipoDePeticion);
+		}
+		
+
+	}
+	//instanciamos la subclase que se encarga de buscar datos y nos devuelve un string el cual lo vamos
+	//almcenando en unh arraylist que mas adelante lo enviaremos por mail*/
+	public ArrayList<String> buscarDato() {
+		int numeroPeticionesParseado = Integer.parseInt(numeroDePericiones);
+		SubclaseThreadDato dato = new SubclaseThreadDato();
+		ArrayList<String> listadoDatos = new ArrayList<>();
+		for (int i = 0; i < numeroPeticionesParseado; i++) {
+			Thread  ThreadDatos = new Thread(dato);
+			try {
+				listadoDatos.add(dato.recibeYdevielveJSONTratado());
+				ThreadDatos.start();
+				ThreadDatos.join();
+				
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return listadoDatos;
+	}
+
+	/*instanciamos la subclase que se encarga de buscar chistes y nos devuelve un string el cual lo vamos
+		almcenando en unh arraylist*/
+	
+	public ArrayList<String> buscarChiste() {
+		int numeroPeticionesParseado = Integer.parseInt(numeroDePericiones);
+		SubclaseThreadChiste chiste = new SubclaseThreadChiste();
+		ArrayList<String> listadoChistes = new ArrayList<>();
+		for (int i = 0; i < numeroPeticionesParseado; i++) {
+			Thread  chistes = new Thread(chiste);
+			try {
+				listadoChistes.add(chiste.recibeYdevielveJSONTratado());
+				chistes.start();
+				chistes.join();
+				
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return listadoChistes;
+	}
+
+
+}

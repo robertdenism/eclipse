@@ -1,0 +1,87 @@
+package proyectoAPIsTODO;
+
+
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+
+import java.util.ArrayList;
+
+
+public class MainRecibeEnvia {
+
+	private static final int TAMANIO_BUFFER = 65535;
+	private static final String CARACTER_SEPARADOR = ";";
+	
+
+	public static void main(String[] args) {
+		
+		int ip = Integer.parseInt(args[0]);
+		String mail = args[1];
+		String contrasenia = args[2];
+		String tipoDeDato = "";
+		String numeroDePeticiones ="";
+		String correo = "";
+		
+		
+		try {
+			DatagramSocket socket = new DatagramSocket(ip);
+			byte[] buffer = new byte[TAMANIO_BUFFER];
+			while(true) {
+				DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+				socket.receive(packet);
+				String datosRecibidos = new String(packet.getData(), 0, packet.getLength());
+				System.out.println("Dato " + datosRecibidos + " " + packet.getAddress() + ":" + packet.getPort());
+				
+				String [] separador = datosRecibidos.split(CARACTER_SEPARADOR);
+				
+				while(separador.length!=3) {
+					System.out.println("vuelve a hacer la peticion");
+					socket.receive(packet);
+					datosRecibidos = new String(packet.getData(), 0, packet.getLength());
+					separador = datosRecibidos.split(CARACTER_SEPARADOR);
+				}
+				
+				tipoDeDato = separador[0];
+				numeroDePeticiones = separador[1];
+				correo = separador[2];
+				
+				metodoPrincipal(correo, mail, contrasenia, tipoDeDato, numeroDePeticiones);
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		//este metodo se encarga de todo
+		
+		
+		
+		
+
+	}
+	
+	public static void metodoPrincipal(String correo, String mail, String contrasenia, String tipoDeDato, String numeroDePeticiones) {
+		new Thread(()->{
+			
+			//enviamos lo que quiere y enviamos peticion
+			RecibePeticiones  recibidor = new RecibePeticiones(tipoDeDato,numeroDePeticiones);
+			Thread threadP = new Thread(recibidor);
+			threadP.start();
+			
+			//listado que vamos a enviar
+			ArrayList<String> listaAEnviar = new ArrayList<>();
+			listaAEnviar.addAll(recibidor.listaPrincipal());
+			//comoprobamos que se va a enviar
+			System.out.println(listaAEnviar);
+			
+			///con esto enviamos el correo
+			ThreadEnviaCorreo mensajero = new ThreadEnviaCorreo(listaAEnviar, correo, mail, contrasenia);
+			Thread threadD = new Thread(mensajero);
+			threadD.start();
+			
+		}).start();
+	}
+
+
+	
+}

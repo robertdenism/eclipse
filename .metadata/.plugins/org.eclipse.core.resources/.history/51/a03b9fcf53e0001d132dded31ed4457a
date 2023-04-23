@@ -1,0 +1,22 @@
+package proyectoAPIsTODO;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class SubclaseThreadChiste extends RecibePeticiones implements Runnable {
+
+	public SubclaseThreadChiste(String numeroDePericiones2) {
+		super(numeroDePericiones2);
+	}
+
+	@Override
+	public void run() {
+		
+
+	}
+}
+
+

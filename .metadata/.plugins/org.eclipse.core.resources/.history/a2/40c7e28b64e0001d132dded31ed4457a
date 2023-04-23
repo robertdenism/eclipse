@@ -1,0 +1,18 @@
+package proyectoAPIsTODO;
+
+public class SubclaseThreadDato  implements Runnable{
+
+	@Override
+	public void run() {
+		recibeYdevielveJSONTratado();
+		
+	}
+
+	public void recibeYdevielveJSONTratado() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+
+}

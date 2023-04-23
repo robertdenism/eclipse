@@ -1,0 +1,19 @@
+package proyectoAPIsTODO;
+
+public class SubclaseThreadDato extends RecibePeticiones implements Runnable {
+	
+	
+
+	public SubclaseThreadDato(String numeroDePericiones2) {
+		super(numeroDePericiones2);
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		super.run();
+	}
+	
+	
+
+}

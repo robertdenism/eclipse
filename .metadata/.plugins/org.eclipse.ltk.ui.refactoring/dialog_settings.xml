@@ -7,4 +7,9 @@
 	<section name="org.eclipse.ltk.ui.refactoring.settings">
 		<item key="qualifyReferences" value="false"/>
 	</section>
+	<section name="RefactoringStatusDialog">
+		<item key="DIALOG_WIDTH" value="800"/>
+		<item key="DIALOG_HEIGHT" value="466"/>
+		<item key="DIALOG_FONT_NAME" value="1|San Francisco Text|11.0|0|GTK|1|"/>
+	</section>
 </section>

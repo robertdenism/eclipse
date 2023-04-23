@@ -1,0 +1,34 @@
+package pruebasVarias;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class pruebaDatos {
+	public static void main(String[] args) {
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create("https://numbersapi.p.rapidapi.com/random/trivia?min=10&max=20&fragment=true&json=true"))
+				.header("X-RapidAPI-Key", "8016579147mshdffff6fc2911bfep11fbbcjsna986b712e5e1")
+				.header("X-RapidAPI-Host", "numbersapi.p.rapidapi.com")
+				.method("GET", HttpRequest.BodyPublishers.noBody())
+				.build();
+		HttpResponse<String> response;
+		try {
+			response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+			String loQueDevuelve = response.body().toString();
+			String hola [] = loQueDevuelve.split("\"");
+			System.out.println(hola[3]);
+			System.out.println(hola[5]);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+}

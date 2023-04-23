@@ -1,0 +1,41 @@
+package pruebasVarias;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.Socket;
+
+public class pruebas {
+	
+	public static void main(String[] args) {
+		
+
+		
+		        try {
+		            // Crea un socket para establecer una conexión con la página web
+		            Socket socket = new Socket("v2.jokeapi.dev", 80);
+		            // Crea una solicitud para enviar al servidor
+		            String request = "GET https://v2.jokeapi.dev/joke/Programming HTTP/1.1\r\n" +
+		                    "Host: v2.jokeapi.dev\r\n" +
+		                    "Connection: close\r\n\r\n";
+		            // Envía la solicitud al servidor a través del socket
+		            OutputStream outputStream = socket.getOutputStream();
+		            outputStream.write(request.getBytes());
+		            // Lee los datos de respuesta desde el socket
+		            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		            StringBuilder response = new StringBuilder();
+		            String line;
+		            while ((line = bufferedReader.readLine()) != null) {
+		                response.append(line);
+		            }
+		            // Cierra el socket y el lector
+		            bufferedReader.close();
+		            socket.close();
+		            // Muestra los datos de respuesta en la consola
+		            System.out.println(response.toString());
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
+		
+}

@@ -1,0 +1,65 @@
+package proyectoAPIsTODO;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+
+public class MainRecibeEnvia {
+
+	public static void main(String[] args) {
+		
+		private static int ip = Integer.parseInt(args[0]);
+		
+		
+		
+		try {
+			DatagramSocket socket = new DatagramSocket(12345);
+			byte[] buffer = new byte[65535];
+			while(true) {
+				DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+				socket.receive(packet);
+				String datosRecibidos = new String(packet.getData(), 0, packet.getLength());
+				System.out.println("Dato " + datosRecibidos + " " + packet.getAddress() + ":" + packet.getPort());
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		//este metodo se encarga de todo
+		
+		//metodoPrincipal();
+		
+		
+
+	}
+	
+	/*public static void metodoPrincipal() {
+		new Thread(()->{
+			//enviamos lo que quiere y enviamos peticion
+			RecibePeticiones  recibidor = new RecibePeticiones("m","2");
+			Thread threadP = new Thread(recibidor);
+			threadP.start();
+			
+			//listado que vamos a enviar
+			ArrayList<String> listaAEnviar = new ArrayList<>();
+			listaAEnviar.addAll(recibidor.listaPrincipal());
+			//comoprobamos que se va a enviar
+			System.out.println(listaAEnviar);
+			
+			///con esto enviamos el correo
+			ThreadEnviaCorreo mensajero = new ThreadEnviaCorreo(listaAEnviar, "robert1994denis@gmail.com");
+			Thread threadD = new Thread(mensajero);
+			threadD.start();
+			
+		}).start();
+	}*/
+
+
+	
+}

@@ -1,0 +1,74 @@
+package proyectoAPIsTODO;
+
+import java.util.ArrayList;
+
+import org.simplejavamail.api.email.Email;
+import org.simplejavamail.api.mailer.Mailer;
+import org.simplejavamail.api.mailer.config.TransportStrategy;
+import org.simplejavamail.email.EmailBuilder;
+import org.simplejavamail.mailer.MailerBuilder;
+
+public class ThreadEnviaCorreo implements Runnable {
+	
+	public static final String CABECERA = "AQUI ESTA TU LISTADO CON DATOS O CHISTES";
+	ArrayList<String> arrayAEnviar;
+	String correo;
+	
+	
+
+	public ThreadEnviaCorreo(ArrayList<String> arrayAEnviar, String correo) {
+		this.arrayAEnviar = arrayAEnviar;
+		this.correo = correo;
+	}
+
+
+
+	@Override
+	public void run() {
+		
+		metodoCorreo(correo);
+		
+	}
+
+	private void metodoCorreo(String correo) {
+		try {
+			
+			String mensaje = mensajeConstruido();
+			String cuerpo = "<html><body><b>"+CABECERA+"</b>"+"<p>"+mensaje+"<p>"+"</body></html>";
+			Email email = EmailBuilder.startingBlank()
+					
+			          .to("Conseguidooo", "robert.munteanu@educa.madrid.org")
+			          //la terminacion tiene que ser s o si con educa.madrid en eclipse
+			          .from("robert", "robertConNuevoMail@educa.madrid.org")
+			          //.withReplyTo("lollypop", "lolly.pop@othermail.com")
+			          .withSubject("prueba mensaje desde java")
+			          .withHTMLText(cuerpo) //para enviar con html
+			          //.withPlainText(cuerpo)//para enciar mensje plano
+			          .buildEmail();
+			         
+
+			Mailer mailer = MailerBuilder
+			          .withSMTPServer("smtp.educa.madrid.org", 587, "robert.munteanu", "Munteanu1")
+			          .withTransportStrategy(TransportStrategy.SMTP_TLS)
+			          .clearEmailValidator() // turns off email validatio
+			          .buildMailer();
+
+			mailer.sendMail(email);
+			
+			System.out.println("Mensaje enviado");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	public String mensajeConstruido() {
+		String ul= "<ul>";
+		String finUl = "</ul>";
+		String cadena = "";
+		 for (String elemento : arrayAEnviar) {
+	            cadena +="<li>"+elemento+"</li>" + "\n";
+	        }
+		return ("\n"+ul+cadena+finUl);
+	}
+
+}

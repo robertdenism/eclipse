@@ -1,0 +1,75 @@
+package proyectoAPIsTODO;
+
+import java.util.ArrayList;
+
+import org.simplejavamail.api.email.Email;
+import org.simplejavamail.api.mailer.Mailer;
+import org.simplejavamail.api.mailer.config.TransportStrategy;
+import org.simplejavamail.config.ConfigLoader;
+import org.simplejavamail.email.EmailBuilder;
+import org.simplejavamail.mailer.MailerBuilder;
+
+public class ThreadEnviaCorreo implements Runnable {
+	
+	ArrayList<String> arrayAEnviar;
+	String correo;
+	
+	
+
+	public ThreadEnviaCorreo(ArrayList<String> arrayAEnviar, String correo) {
+		this.arrayAEnviar = arrayAEnviar;
+		this.correo = correo;
+	}
+
+
+
+	@Override
+	public void run() {
+		
+		metodoCorreo(correo);
+		
+	}
+
+
+
+	private void metodoCorreo(String correo) {
+		ConfigLoader.loadProperties("simplejavamail.properties", true); // optional default
+		ConfigLoader.loadProperties("overrides.properties", true); // optional extra
+		
+		String mensaje = mensajeConstruido();
+		
+		Email email = EmailBuilder.startingBlank()
+				
+		          .to("Conseguidooo", "robert.munteanu@educa.madrid.org")
+		          //la terminacion tiene que ser s o si con educa.madrid en eclipse
+		          .from("robert", "robertConNuevoMail@educa.madrid.org")
+		          //.withReplyTo("lollypop", "lolly.pop@othermail.com")
+		          .withSubject("prueba mensaje desde java")
+		          //.withHTMLText("<img src='cid:wink1'><b>We should meet up!</b><img src='cid:wink2'>")
+		          .withPlainText(mensaje)
+		          .buildEmail();
+		         
+
+		Mailer mailer = MailerBuilder
+		          .withSMTPServer("smtp.educa.madrid.org", 587, "robert.munteanu", "Munteanu1")
+		          .withTransportStrategy(TransportStrategy.SMTP_TLS)
+		          .clearEmailValidator() // turns off email validatio
+		          .buildMailer();
+
+		mailer.sendMail(email);
+		
+		System.out.println("Mensaje enviado");
+		
+	}
+
+
+
+	private String mensajeConstruido() {
+		String cadena = "";
+		 for (String elemento : arrayAEnviar) {
+	            cadena += elemento + "\n";
+	        }
+		return cadena;
+	}
+
+}

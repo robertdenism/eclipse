@@ -1,0 +1,13 @@
+package proyectoAPIsTODO;
+
+public class subclaseDato extends RecibePeticiones implements Runnable {
+
+	public subclaseDato(String numeroDePericiones) {
+		super(numeroDePericiones);
+		
+		
+	}
+	
+	
+
+}

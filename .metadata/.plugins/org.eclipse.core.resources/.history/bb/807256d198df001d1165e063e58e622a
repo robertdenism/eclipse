@@ -1,0 +1,17 @@
+package proyectoAPIsTODO;
+
+public class SubclaseThreadChiste extends RecibePeticiones implements Runnable {
+	
+	
+
+	public SubclaseThreadChiste(String numeroDePericiones2) {
+		super(numeroDePericiones2);
+	}
+
+	@Override
+	public void run() {
+		
+		
+	}
+	
+}

@@ -1,3 +1,11 @@
 1681749954900	Extract constant 'DEBE_RESPONDER_CON_S_O_N'
 1681749989300	Extract constant 'FORMATO'
 1681750046526	Extract constant 'MENSAJE_BIENVENIDA'
+1682005992247	Rename type 'subclaseChiste'
+1682006387498	Rename type 'subclaseDato'
+1682006396938	Rename type 'SubclaseChiste'
+1682006461394	Delete element
+1682006475095	Rename type 'SubclaseThreadDato'
+1682095726529	Delete element
+1682096750132	Delete element
+1682097006610	Delete element

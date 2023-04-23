@@ -1,0 +1,20 @@
+package proyectoAPIsTODO;
+
+public class SubclaseThreadDato  implements Runnable{
+	private final static String CHISTE_UNICO = "single";
+	private final static String TIPO_SPLIT = "\"";
+
+	@Override
+	public void run() {
+		recibeYdevielveJSONTratado();
+		
+	}
+
+	public void recibeYdevielveJSONTratado() {
+		
+		
+	}
+	
+	
+
+}
